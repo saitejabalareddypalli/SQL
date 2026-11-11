@@ -1,0 +1,281 @@
+Microsoft Windows [Version 10.0.26200.9711]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\TECHVITY>MYSQL -U root -P
+MYSQL: [ERROR] MYSQL: option '-P' requires an argument.
+
+C:\Users\TECHVITY>MYSQL -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.45 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| demo               |
+| demo_emp_db        |
+| information_schema |
+| mailbox_db         |
+| maildb             |
+| myfirstdb          |
+| mysql              |
+| performance_schema |
+| salesstring_in     |
++--------------------+
+9 rows in set (0.12 sec)
+
+mysql> USE myfirstdb;
+Database changed
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_myfirstdb |
++---------------------+
+| students            |
++---------------------+
+1 row in set (0.07 sec)
+
+mysql> DESCRIBE students;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | YES  |     | NULL    |       |
+| name  | varchar(50) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.06 sec)
+
+mysql> SELECT * FROM students;
++------+-------+
+| id   | name  |
++------+-------+
+|    1 | RAM   |
+|    2 | SRINI |
++------+-------+
+2 rows in set (0.04 sec)
+
+mysql> INSERT INTO students (id,name)
+    -> VALUES (3,'ABHI');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT * FROM students;
++------+-------+
+| id   | name  |
++------+-------+
+|    1 | RAM   |
+|    2 | SRINI |
+|    3 | ABHI  |
++------+-------+
+3 rows in set (0.04 sec)
+
+mysql> ALTER TABLE students
+    -> ADD COLUMN designation varchar(50));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 2
+mysql> ADD COLUMN designation varchar(50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ADD COLUMN designation varchar(50)' at line 1
+mysql> ALTER TABLE students
+    -> ADD COLUMN designation varchar(50);
+Query OK, 0 rows affected (0.23 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM students;
++------+-------+-------------+
+| id   | name  | designation |
++------+-------+-------------+
+|    1 | RAM   | NULL        |
+|    2 | SRINI | NULL        |
+|    3 | ABHI  | NULL        |
++------+-------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE students
+    -> SET designation = 'Developer'
+    -> WERE ID =1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WERE ID =1' at line 3
+mysql> UPDATE students
+    -> SELECT * FROM students;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM students' at line 2
+mysql> UPDATE students
+    -> SET designation = 'Developer'
+    -> WHERE ID =1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM students;
++------+-------+-------------+
+| id   | name  | designation |
++------+-------+-------------+
+|    1 | RAM   | Developer   |
+|    2 | SRINI | NULL        |
+|    3 | ABHI  | NULL        |
++------+-------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE students
+    -> SET designation = 'HR'
+    -> WHERE ID =3;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM students;
++------+-------+-------------+
+| id   | name  | designation |
++------+-------+-------------+
+|    1 | RAM   | Developer   |
+|    2 | SRINI | NULL        |
+|    3 | ABHI  | HR          |
++------+-------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO students (id,name,designation)
+    -> VALUES (4,'SAM','DIVOPS');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SELECT * FROM students;
++------+-------+-------------+
+| id   | name  | designation |
++------+-------+-------------+
+|    1 | RAM   | Developer   |
+|    2 | SRINI | NULL        |
+|    3 | ABHI  | HR          |
+|    4 | SAM   | DIVOPS      |
++------+-------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM students;
++------+-------+-------------+
+| id   | name  | designation |
++------+-------+-------------+
+|    1 | RAM   | Developer   |
+|    2 | SRINI | NULL        |
+|    3 | ABHI  | HR          |
+|    4 | SAM   | DIVOPS      |
++------+-------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT name FROM students;
++-------+
+| name  |
++-------+
+| RAM   |
+| SRINI |
+| ABHI  |
+| SAM   |
++-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT id FROM students;
++------+
+| id   |
++------+
+|    1 |
+|    2 |
+|    3 |
+|    4 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT designation FROM students;
++-------------+
+| designation |
++-------------+
+| Developer   |
+| NULL        |
+| HR          |
+| DIVOPS      |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT id,designation FROM students;
++------+-------------+
+| id   | designation |
++------+-------------+
+|    1 | Developer   |
+|    2 | NULL        |
+|    3 | HR          |
+|    4 | DIVOPS      |
++------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM students;
++------+-------+-------------+
+| id   | name  | designation |
++------+-------+-------------+
+|    1 | RAM   | Developer   |
+|    2 | SRINI | NULL        |
+|    3 | ABHI  | HR          |
+|    4 | SAM   | DIVOPS      |
++------+-------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM students
+    -> WHERE name = 'ABHI';
++------+------+-------------+
+| id   | name | designation |
++------+------+-------------+
+|    3 | ABHI | HR          |
++------+------+-------------+
+1 row in set (0.04 sec)
+
+mysql> UPDATA students
+    -> SET designation = 'Python Dev'
+    -> WHERE name = 'ABHI';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDATA students
+SET designation = 'Python Dev'
+WHERE name = 'ABHI'' at line 1
+mysql> UPDATA students
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDATA students' at line 1
+mysql> UPDATE students
+    -> WHERE name = 'ABHI';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE name = 'ABHI'' at line 2
+mysql> UPDATE students
+    -> WHERE name = 'ABHI';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE name = 'ABHI'' at line 2
+mysql> UPDATE students
+    -> WHERE name = 'ABHI'
+    -> SET designation = 'Python Dev';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE name = 'ABHI'
+SET designation = 'Python Dev'' at line 2
+mysql> UPDATE students
+    -> SET designation = 'Python Dev'
+    -> WHERE name = 'ABHI';
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM students
+    -> ;
++------+-------+-------------+
+| id   | name  | designation |
++------+-------+-------------+
+|    1 | RAM   | Developer   |
+|    2 | SRINI | NULL        |
+|    3 | ABHI  | Python Dev  |
+|    4 | SAM   | DIVOPS      |
++------+-------+-------------+
+4 rows in set (0.04 sec)
+
+mysql> DELETE FROM students
+    -> WHERE name = 'ABHI';
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM students
+    -> ;
++------+-------+-------------+
+| id   | name  | designation |
++------+-------+-------------+
+|    1 | RAM   | Developer   |
+|    2 | SRINI | NULL        |
+|    4 | SAM   | DIVOPS      |
++------+-------+-------------+
+3 rows in set (0.00 sec)
+
+mysql>
