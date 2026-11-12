@@ -1,0 +1,75 @@
+Microsoft Windows [Version 10.0.26200.9711]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\TECHVITY>MYSQL -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.45 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE company;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> USE company;
+Database changed
+mysql> CREATE TABLE employees(
+    -> id INT PRIMARY KEY,
+    -> name VARCHAR(100) NOT NULL,
+    -> email VARCHAR(100) UNIQUE,
+    -> age INT CHECK(age >=18),
+    -> salary DECIMAL(10,2) DEFAULT 15000
+    -> );
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> INSERT INTO employees (^C
+mysql> INSERT INTO employees (id,;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> INSERT INTO employees (id,name,email,age,salary)
+    -> VALUES
+    -> (101,'SAI','sai@gmail.com',29,16000),
+    -> (102,'SRINIVASU P','sri@gmail.com',22,17000),
+    -> (103,'SRINIVAS S','sri.S@gmail.com',23,18000),
+    -> (104,'SURENDRA D','sur.S@gmail.com',21,15000);
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employees;
++-----+-------------+-----------------+------+----------+
+| id  | name        | email           | age  | salary   |
++-----+-------------+-----------------+------+----------+
+| 101 | SAI         | sai@gmail.com   |   29 | 16000.00 |
+| 102 | SRINIVASU P | sri@gmail.com   |   22 | 17000.00 |
+| 103 | SRINIVAS S  | sri.S@gmail.com |   23 | 18000.00 |
+| 104 | SURENDRA D  | sur.S@gmail.com |   21 | 15000.00 |
++-----+-------------+-----------------+------+----------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO employees (id,name,email,age,salary)
+    -> VALUES
+    -> (101,'SAM','sam@gmail.com',27,15500);
+ERROR 1062 (23000): Duplicate entry '101' for key 'employees.PRIMARY'
+mysql> INSERT INTO employees (id,name,email,age,salary)
+    -> VALUES
+    -> (105,,'sur.S@gmail.com',27,14000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','sur.S@gmail.com',27,14000)' at line 3
+mysql> INSERT INTO employees (id,name,email,age,salary)
+    -> VALUES
+    -> (105,'SAM','sam@gmail.com',17,15500);
+ERROR 3819 (HY000): Check constraint 'employees_chk_1' is violated.
+mysql> INSERT INTO employees (id,name,email,age,salary)
+    -> VALUES
+    -> (105,'SAM','sai@gmail.com',27,15500);
+ERROR 1062 (23000): Duplicate entry 'sai@gmail.com' for key 'employees.email'
+mysql> INSERT INTO employees (id,name,email,age,salary)
+    -> VALUES
+    -> (105,'SAM','sam@gmail.com',27);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> (105,'SAM','sam@gmail.com',27);
